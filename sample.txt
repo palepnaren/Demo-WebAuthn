@@ -1,0 +1,127 @@
+Fido2AttestationResult {
+  validateExpectations: [AsyncFunction: validateExpectations],
+  validateCreateRequest: [Function: validateCreateRequest],
+  validateRawClientDataJson: [AsyncFunction: validateRawClientDataJson],
+  validateOrigin: [AsyncFunction: validateOrigin],
+  validateId: [AsyncFunction: validateId],
+  validateCreateType: [AsyncFunction: validateCreateType],
+  validateGetType: [AsyncFunction: validateGetType],
+  validateChallenge: [AsyncFunction: validateChallenge],
+  validateTokenBinding: [AsyncFunction: validateTokenBinding],
+  validateTransports: [AsyncFunction: validateTransports],
+  validateRawAuthnrData: [AsyncFunction: validateRawAuthnrData],
+  validateAttestation: [AsyncFunction: validateAttestation],
+  validateAssertionSignature: [AsyncFunction: validateAssertionSignature],
+  validateRpIdHash: [AsyncFunction: validateRpIdHash],
+  validateAaguid: [AsyncFunction: validateAaguid],
+  validateCredId: [AsyncFunction: validateCredId],
+  validatePublicKey: [AsyncFunction: validatePublicKey],
+  validateFlags: [AsyncFunction: validateFlags],
+  validateUserHandle: [AsyncFunction: validateUserHandle],
+  validateCounter: [AsyncFunction: validateCounter],
+  validateInitialCounter: [AsyncFunction: validateInitialCounter],
+  validateAssertionResponse: [Function: validateAssertionResponse],
+  audit: {
+    validExpectations: true,
+    validRequest: true,
+    complete: true,
+    journal: Set(18) {
+      'type',
+      'aaguid',
+      'credentialPublicKeyCose',
+      'credentialPublicKeyJwk',
+      'credentialPublicKeyPem',
+      'rawClientDataJson',
+      'origin',
+      'challenge',
+      'tokenBinding',
+      'rawId',
+      'rawAuthnrData',
+      'rpIdHash',
+      'flags',
+      'fmt',
+      'counter',
+      'credId',
+      'credIdLen',
+      'transports'
+    },
+    warning: Map(0) {},
+    info: Map(0) {}
+  },
+  validateAudit: [AsyncFunction: validateAudit],
+  requiredExpectations: Set(3) { 'origin', 'challenge', 'flags' },
+  optionalExpectations: Set(1) { 'rpId' },
+  expectations: Map(3) {
+    'origin' => 'http://localhost:3000',
+    'challenge' => 'SpVryoAgg46nRWonL_bu9A_Zf6HtTVkwYETUkpDSs9s',
+    'flags' => Set(2) { 'AT', 'UP-or-UV' }
+  },
+  request: {
+    authenticatorAttachment: 'platform',
+    id: ArrayBuffer {
+      [Uint8Contents]: <01 bf 5c 04 a0 0d bb 78 1c bc 3e d4 b0 88 f8 c8 6b 1f d3 03 a6 5a ab d0 58 66 c9 27 12 23 41 aa 27 89 9d bd 44 e0 c2 b5 02 d9 cb 17 0b 8a a8 77 5c 2a 13 a0 c0 19 b6 c9 dc 53 9e 33 99 5b 43 88 90 23 33 8f 14 13 02 82>,
+      byteLength: 72
+    },
+    rawId: ArrayBuffer {
+      [Uint8Contents]: <fd bf 5c 04 af 8d bb 78 1c bc 3e d4 b0 88 f8 c8 6b 1f d3 03 a6 5a ab d0 58 66 c9 27 12 23 41 aa 27 89 9d bd 44 e0 c2 b5 02 d9 cb 17 0b 8a a8 77 5c 2a 13 a0 c0 19 b6 c9 dc 53 9e 33 99 5b 43 88 9f e3 33 8f 14 13 02 82>,
+      byteLength: 72
+    },
+    type: 'public-key',
+    response: {
+      attestationObject: 'o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVjMSZYN5YgOjGh0NBcPZHZgW4/krrmihjLHmVzzuoMdl2NFAAAAAK3OAAI1vMYKZIsLJfHwVQMASP2/XASvjbt4HLw+1LCI+MhrH9MDplqr0FhmyScSI0GqJ4mdvUTgwrUC2csXC4qod1wqE6DAGbbJ3FOeM5lbQ4if4zOPFBMCgqUBAgMmIAEhWCALPCToQaaNAArECvqgeCYSBo3j0crFSYr6I675BWv60CJYIOrsfms78d+Tp7ayMJs1MHJtIwN78xOI7KJFw90CDxjU',
+      clientDataJSON: 'eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiU3BWcnlvQWdnNDZuUldvbkxfYnU5QV9aZjZIdFRWa3dZRVRVa3BEU3M5cyIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImNyb3NzT3JpZ2luIjpmYWxzZX0='
+    }
+  },
+  clientData: Map(6) {
+    'challenge' => 'SpVryoAgg46nRWonL_bu9A_Zf6HtTVkwYETUkpDSs9s',
+    'origin' => 'http://localhost:3000',
+    'type' => 'webauthn.create',
+    'tokenBinding' => undefined,
+    'rawClientDataJson' => ArrayBuffer {
+      [Uint8Contents]: <7b 22 74 79 70 65 22 3a 22 77 65 62 61 75 74 68 6e 2e 63 72 65 61 74 65 22 2c 22 63 68 61 6c 6c 65 6e 67 65 22 3a 22 53 70 56 72 79 6f 41 67 67 34 36 6e 52 57 6f 6e 4c 5f 62 75 39 41 5f 5a 66 36 48 74 54 56 6b 77 59 45 54 55 6b 70 44 53 73 39 73 22 2c 22 6f 72 69 67 69 6e 22 3a 22 68 74 74 70 3a 2f ... 37 more bytes>,
+      byteLength: 137
+    },
+    'rawId' => ArrayBuffer {
+      [Uint8Contents]: <fd bf 5c 04 af 8d bb 78 1c bc 3e d4 b0 88 f8 c8 6b 1f d3 03 a6 5a ab d0 58 66 c9 27 12 23 41 aa 27 89 9d bd 44 e0 c2 b5 02 d9 cb 17 0b 8a a8 77 5c 2a 13 a0 c0 19 b6 c9 dc 53 9e 33 99 5b 43 88 9f e3 33 8f 14 13 02 82>,
+      byteLength: 72
+    }
+  },
+  authnrData: Map(12) {
+    'fmt' => 'none',
+    'rawAuthnrData' => ArrayBuffer {
+      [Uint8Contents]: <49 96 0d e5 88 0e 8c 68 74 34 17 0f 64 76 60 5b 8f e4 ae b9 a2 86 32 c7 99 5c f3 ba 83 1d 97 63 45 00 00 00 00 ad ce 00 02 35 bc c6 0a 64 8b 0b 25 f1 f0 55 03 00 48 fd bf 5c 04 af 8d bb 78 1c bc 3e d4 b0 88 f8 c8 6b 1f d3 03 a6 5a ab d0 58 66 c9 27 12 23 41 aa 27 89 9d bd 44 e0 c2 b5 02 d9 cb 17 0b ... 104 more bytes>,
+      byteLength: 204
+    },
+    'transports' => undefined,
+    'rpIdHash' => ArrayBuffer {
+      [Uint8Contents]: <49 96 0d e5 88 0e 8c 68 74 34 17 0f 64 76 60 5b 8f e4 ae b9 a2 86 32 c7 99 5c f3 ba 83 1d 97 63>,
+      byteLength: 32
+    },
+    'flags' => Set(3) { 'UP', 'UV', 'AT' },
+    'counter' => 0,
+    'aaguid' => ArrayBuffer {
+      [Uint8Contents]: <ad ce 00 02 35 bc c6 0a 64 8b 0b 25 f1 f0 55 03>,
+      byteLength: 16
+    },
+    'credIdLen' => 72,
+    'credId' => ArrayBuffer {
+      [Uint8Contents]: <fd bf 5c 04 af 8d bb 78 1c bc 3e d4 b0 88 f8 c8 6b 1f d3 03 a6 5a ab d0 58 66 c9 27 12 23 41 aa 27 89 9d bd 44 e0 c2 b5 02 d9 cb 17 0b 8a a8 77 5c 2a 13 a0 c0 19 b6 c9 dc 53 9e 33 99 5b 43 88 9f e3 33 8f 14 13 02 82>,
+      byteLength: 72
+    },
+    'credentialPublicKeyCose' => ArrayBuffer {
+      [Uint8Contents]: <a5 01 02 03 26 20 01 21 58 20 0b 3c 24 e8 41 a6 8d 00 0a c4 0a fa a0 78 26 12 06 8d e3 d1 ca c5 49 8a fa 23 ae f9 05 6b fa d0 22 58 20 ea ec 7e 6b 3b f1 df 93 a7 b6 b2 30 9b 35 30 72 6d 23 03 7b f3 13 88 ec a2 45 c3 dd 02 0f 18 d4>,
+      byteLength: 77
+    },
+    'credentialPublicKeyJwk' => {
+      kty: 'EC',
+      alg: 'ES256',
+      crv: 'P-256',
+      x: 'Czwk6EGmjQAKxAr6oHgmEgaN49HKxUmK-iOu-QVr-tA',
+      y: '6ux-azvx35OntrIwmzUwcm0jA3vzE4jsokXD3QIPGNQ'
+    },
+    'credentialPublicKeyPem' => '-----BEGIN PUBLIC KEY-----\n' +
+      'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAECzwk6EGmjQAKxAr6oHgmEgaN49HK\n' +
+      'xUmK+iOu+QVr+tDq7H5rO/Hfk6e2sjCbNTBybSMDe/MTiOyiRcPdAg8Y1A==\n' +
+      '-----END PUBLIC KEY-----\n'
+  }
+}

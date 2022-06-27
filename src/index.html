@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>AngularWebauthn</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="./assets/css/milligram.min.css" />
+    <style>
+        html,
+        body,
+        .container,
+        .row {
+            height: 100%;
+        }
+
+        .formcontainer {
+            background: #f0f0f0;
+            padding: 15px;
+        }
+
+        .formcontainer form,
+        .formcontainer fieldset {
+            margin: 0;
+        }
+
+        .secretcontainer {
+            background: #f0f0f0;
+            padding: 15px;
+        }
+
+        #registerContainer,
+        #mainContainer {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <app-root></app-root>
+    <script type="text/javascript" src="./assets/js/jquery-3.2.1.min.js"></script>
+    <!-- <script src="js/helpers.js"></script>
+    <script src="js/base64url-arraybuffer.js"></script>
+    <script src="js/view.js"></script>
+    <script src="js/password.auth.js"></script>
+    <script src="js/webauthn.auth.js"></script>
+    <script>
+        $(document).ready(() => {
+            checkIfLoggedIn()
+                .then((response) => {
+                    if (response)
+                        return loadMainContainer()
+                })
+        })
+    </script> -->
+    <script type="text/javascript">
+        $(document).ready(() => {
+            $('#toRegistration').click((event) => {
+                event.preventDefault();
+                $('#loginContainer').hide();
+                $('#registerContainer').show();
+            })
+
+            $('#toLogin').click((event) => {
+                event.preventDefault();
+                $('#registerContainer').hide();
+                $('#loginContainer').show();
+            })
+
+            $('#register').submit((event)=>{
+                event.preventDefault();
+            })
+            $('#login').submit((event)=>{
+                event.preventDefault();
+            })
+        })
+
+    </script>
+</body>
+
+</html>

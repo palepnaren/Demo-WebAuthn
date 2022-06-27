@@ -1,0 +1,15 @@
+{
+    "rawId": "UkAm_2u_3jUlr6bcwTgWvtu6rEo7It12qFnzMCrOhHO1XQX2c2tHThj3NuFR9Y35eTFLR6O-Pa0naMZG3lcHijfICS9WbhjQkg",
+    "response": {
+        "attestationObject": "o2NmbXRmcGFja2VkZ2F0dFN0bXSiY2FsZyZjc2lnWEYwRAIgUCM-qJLGIzBwLn078L2WFEAffeT6GGFqEiTGO4qrcUACIEbSxBPpfQDpAocJHDIALIARcr3XNxJMbx0VRjK8wbJSaGF1dGhEYXRhWM1Jlg3liA6MaHQ0Fw9kdmBbj-SuuaKGMseZXPO6gx2XY0UAAAAArc4AAjW8xgpkiwsl8fBVAwBJUkAm_2u_3jUlr6bcwTgWvtu6rEo7It12qFnzMCrOhHO1XQX2c2tHThj3NuFR9Y35eTFLR6O-Pa0naMZG3lcHijfICS9WbhjQkqUBAgMmIAEhWCDQ3g7kQPxoPXhxSoxEJoifwL__MKzq9SHMX_GD0IOdHiJYIJIXChPhVmf8zQnaBF8QNGqVVqkDaUD4vhh9gzn0iKb5",
+        "getAuthenticatorData": {},
+        "getPublicKey": {},
+        "getPublicKeyAlgorithm": {},
+        "getTransports": {},
+        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiQ0EzSjlTU1B0T1V6aUNJVEhKWV9MRUxYQk9CeHJLNDNfcm13dXlKUkR4dyIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImNyb3NzT3JpZ2luIjpmYWxzZX0"
+    },
+    "authenticatorAttachment": "platform",
+    "getClientExtensionResults": {},
+    "id": "UkAm_2u_3jUlr6bcwTgWvtu6rEo7It12qFnzMCrOhHO1XQX2c2tHThj3NuFR9Y35eTFLR6O-Pa0naMZG3lcHijfICS9WbhjQkg",
+    "type": "public-key"
+}
