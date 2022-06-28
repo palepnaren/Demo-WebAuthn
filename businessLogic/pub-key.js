@@ -21,7 +21,7 @@ exports.initPubKey = function (user, callback) {
         }
         regOpts.authenticatorAttachment = "platform";
         regOpts.pubKeyCredParams = [{
-            type: "public-key", alg: -7
+            type: "public-key", alg: -257
         }]
         return callback(regOpts);
     });
@@ -44,6 +44,7 @@ exports.getPublicKey = function (res, _challenge, callback) {
         factor: "either"
     };
     fido2.attestationResult(res, attestationExpectations).then(res => {
+        console.log(res);
         callback({data: res, credId: authDataStructure.credID});
     });
 
@@ -64,6 +65,32 @@ exports.getServerAssertion = function (authenticators, id, callback) {
         return callback(res);
     })
 
+}
+
+exports.valiate = function(res,key, _challenge, callback){
+
+    let _fido2 = store('fido2');
+    let fido2 = new Fido2Lib(_fido2);
+    res.id = base64ToBuffer.decode(res.id);
+    res.rawId = base64ToBuffer.decode(res.rawId);
+    const assertionExpectations = {
+        // Remove the following comment if allowCredentials has been added into authnOptions so the credential received will be validate against allowCredentials array.
+        allowCredentials: [{
+            id: res.rawId,
+            type: "public-key",
+            transports: ["internal"]
+        }],
+        challenge: _challenge,
+        origin: "http://localhost:3000",
+        factor: "either",
+        publicKey: key,
+        prevCounter: 0,
+        userHandle: res.response.userHandle
+    };
+
+    fido2.assertionResult(res, assertionExpectations).then(res =>{
+        return callback(res);
+    })
 }
 
 

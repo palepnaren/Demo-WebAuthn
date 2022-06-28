@@ -8,8 +8,6 @@ router.post('/login', (request, response) => {
     var authenticators;
 
     keys.getServerAssertion(authenticators, request.session.id, function(res){
-        console.log("challenge while login auth");
-        console.log(res.challenge);
         request.session.challenge = res.challenge;
         response.json({data:res,status:200});
     });
@@ -28,8 +26,6 @@ router.post('/register', (request, response) => {
     keys.initPubKey(request.body, function(res){
         request.session.challenge = res.challenge;
         request.session.username = res.user.name;
-        console.log("challenge after register");
-        console.log(request.session.challenge)
         // request.session.id = res.user.id;
          response.json({data:res, status:200});
      });
@@ -44,8 +40,6 @@ router.post('/getPublicKey', (request, response) => {
         type:''
     }
     keys.getPublicKey(request.body, request.session.challenge, function(res){
-        console.log("challenge after getPubKey");
-        console.log(res.data.clientData.get('challenge'));
         request.session.pubKey = res.data.authnrData.get('credentialPublicKeyPem');
         pubKeyRes.publickey = res.data.authnrData.get('credentialPublicKeyPem');
         pubKeyRes.rawId = base64ToBuffer.encode(res.data.clientData.get('rawId'));
@@ -55,6 +49,14 @@ router.post('/getPublicKey', (request, response) => {
         response.send({data:pubKeyRes,status:200});
     })
     
+})
+
+router.post('/validateCreds', (request, response) => {
+    keys.valiate(request.body,request.session.pubKey, request.session.challenge, function(res){
+        response.json({data: res, status:200});
+    });
+    
+
 })
 
 module.exports = router;

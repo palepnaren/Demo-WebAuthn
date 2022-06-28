@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import base64url from 'base64url';
 
 @Component({
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit {
   title = 'angular-webauthn';
   group: FormGroup;
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router) {
     this.group = this.fb.group({
       name: new FormControl(''),
       username: new FormControl('')
@@ -36,8 +37,9 @@ export class AppComponent implements OnInit {
           id: idbuff,
           userVerification: res['data']['userVerification']
         }
-        navigator.credentials.get({ publicKey }).then(res => {
-          console.log(res);
+        navigator.credentials.get({ publicKey }).then(creds => {
+          let assertionRes = this.publicKeyCredentialToJSON(creds);
+          return this.authenticateCreds(assertionRes);
         }).catch(error =>{
           console.log(error);
         })
@@ -58,7 +60,6 @@ export class AppComponent implements OnInit {
       if (res) {
         res = this.convertMakCredResponse(res.data);
         navigator.credentials.create({ publicKey: res }).then(newcreds => {
-          console.log(newcreds);
           let assertionRes = this.publicKeyCredentialToJSON(newcreds);
           return this.getPublicKey(assertionRes);
         });
@@ -73,6 +74,16 @@ export class AppComponent implements OnInit {
       localStorage.setItem('rawId',res.data.rawId);
     })
 
+  }
+
+  authenticateCreds(response: any){
+    this.http.post('/validateCreds', response).subscribe((res: any) =>{
+      if(res['status']==200){
+        this.router.navigateByUrl('/home?loggedIn=true');
+      } else{
+        this.router.navigateByUrl('/home?loggedIn=false');
+      }
+    })
   }
 
   convertMakCredResponse(res: any) {
@@ -115,7 +126,11 @@ export class AppComponent implements OnInit {
       type: '',
       response: {
         attestationObject: '',
-        clientDataJSON: ''
+        clientDataJSON: '',
+        authenticatorData:'',
+        pubKey: '',
+        signature: '',
+        userHandle: ''
       }
     }
 
@@ -133,10 +148,22 @@ export class AppComponent implements OnInit {
         if (pubKeyCred.response.clientDataJSON instanceof ArrayBuffer) {
           _pubKeyCred.response.clientDataJSON = this.toBase64(pubKeyCred.response.clientDataJSON);
         }
+        if(pubKeyCred.response.authenticatorData instanceof ArrayBuffer){
+          _pubKeyCred.response.authenticatorData = this.toBase64(pubKeyCred.response.authenticatorData);
+        }
+        if(pubKeyCred.response.signature instanceof ArrayBuffer){
+          _pubKeyCred.response.signature = this.toBase64(pubKeyCred.response.signature);
+        }
+        if(pubKeyCred.response.userHandle instanceof ArrayBuffer){
+          _pubKeyCred.response.userHandle = this.toBase64(pubKeyCred.response.userHandle);
+        }
+        let key: any = localStorage.getItem('publickey');
+        _pubKeyCred.response.pubKey = key;
       }
       _pubKeyCred.type = pubKeyCred.type;
       _pubKeyCred.id = pubKeyCred.id;
       _pubKeyCred.authenticatorAttachment = pubKeyCred.authenticatorAttachment;
+      
 
     }
     return _pubKeyCred;
