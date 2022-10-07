@@ -30,7 +30,11 @@ export class AppComponent implements OnInit {
     }
     this.http.post('/login', data).subscribe((res: any) => {
       if(res['status'] == 200){
-        let idbuff = this._base64ToArrayBuffer(res['data']['allowCredentials'][0]['id']);
+        let idbuff;
+        if(res['data']['allowCredentials'][0]['id']){
+          idbuff = this._base64ToArrayBuffer(res['data']['allowCredentials'][0]['id']);
+        }
+        
         let challenge = this._base64ToArrayBuffer(res['data']['challenge']);
         let publicKey = {
           challenge: challenge,
@@ -53,13 +57,16 @@ export class AppComponent implements OnInit {
       username: this.group.controls['username'].value
     }
     this.http.post('/register', data).subscribe((res: any) => {
+      console.log(res);
       if(res['status']==400){
         alert("Username already registered");
         return;
       }
       if (res) {
         res = this.convertMakCredResponse(res.data);
+        console.log(res);
         navigator.credentials.create({ publicKey: res }).then(newcreds => {
+          console.log("Inside create credentials");
           let assertionRes = this.publicKeyCredentialToJSON(newcreds);
           return this.getPublicKey(assertionRes);
         });
@@ -96,14 +103,15 @@ export class AppComponent implements OnInit {
       },
       pubKeyCredParams: res.pubKeyCredParams,
       rp: {
-        id: res.rpId,
-        name: "test"
+        id: res.rp.id,
+        name: res.rp.name
       },
       timeout: res.timeout,
       authenticatorSelection: {
-        userVerification: res.userVerification,
-        authenticatorAttachment: res.authenticatorAttachment
+        userVerification: res.authenticatorSelection.userVerification,
+        authenticatorAttachment: res.authenticatorSelection.authenticatorAttachment
       }
+      // sameOriginWithAncestors: true
     }
     return response;
   }

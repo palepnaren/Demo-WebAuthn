@@ -22,7 +22,8 @@ exports.initPubKey = function (user, callback) {
         regOpts.authenticatorAttachment = "platform";
         regOpts.pubKeyCredParams = [{
             type: "public-key", alg: -257
-        }]
+        },
+        { type: "public-key", alg: -7 }]
         return callback(regOpts);
     });
 
@@ -45,7 +46,7 @@ exports.getPublicKey = function (res, _challenge, callback) {
     };
     fido2.attestationResult(res, attestationExpectations).then(res => {
         console.log(res);
-        callback({data: res, credId: authDataStructure.credID});
+        callback({ data: res, credId: authDataStructure.credID });
     });
 
 }
@@ -55,19 +56,22 @@ exports.getServerAssertion = function (authenticators, id, callback) {
     let _fido2 = store('fido2');
     let fido2 = new Fido2Lib(_fido2);
     fido2.assertionOptions().then(res => {
+        console.log("getServerAssertion");
+        console.log(res)
         var bufChallenge = Buffer.from(res.challenge, 'base64');
         res.challenge = bufChallenge.toString('base64');
         res.allowCredentials = [{
             type: 'public-key',
             id: id,
-            transports: ['internal']
+            transports: ['internal', "usb", "nfc"]
         }]
+        res.userVerification = "required";
         return callback(res);
     })
 
 }
 
-exports.valiate = function(res,key, _challenge, callback){
+exports.valiate = function (res, key, _challenge, callback) {
 
     let _fido2 = store('fido2');
     let fido2 = new Fido2Lib(_fido2);
@@ -78,7 +82,7 @@ exports.valiate = function(res,key, _challenge, callback){
         allowCredentials: [{
             id: res.rawId,
             type: "public-key",
-            transports: ["internal"]
+            transports: ["internal", "usb", "nfc"]
         }],
         challenge: _challenge,
         origin: "http://localhost:3000",
@@ -88,7 +92,7 @@ exports.valiate = function(res,key, _challenge, callback){
         userHandle: res.response.userHandle
     };
 
-    fido2.assertionResult(res, assertionExpectations).then(res =>{
+    fido2.assertionResult(res, assertionExpectations).then(res => {
         return callback(res);
     })
 }
@@ -101,13 +105,12 @@ var makeCredRequest = function () {
         rpName: "Naren Webauthn example",
         rpIcon: "http://localhost:3000",
         challengeSize: 32,
-        cryptoParams: [-7],
+        cryptoParams: [-7,-257],
         attestation: "direct",
         authenticatorAttachment: "platform",
         authenticatorRequireResidentKey: false,
         authenticatorUserVerification: "required",
-        timeout: 60,
-
+        timeout: 300000,
     })
 
     store('fido2', fido2);
@@ -117,16 +120,17 @@ var makeCredRequest = function () {
 }
 
 var parseMakeCredAuthData = (buffer) => {
-    let rpIdHash      = buffer.slice(0, 32);          buffer = buffer.slice(32);
-    let flagsBuf      = buffer.slice(0, 1);           buffer = buffer.slice(1);
-    let flags         = flagsBuf[0];
-    let counterBuf    = buffer.slice(0, 4);           buffer = buffer.slice(4);
-    let counter       = counterBuf.readUInt32BE(0);
-    let aaguid        = buffer.slice(0, 16);          buffer = buffer.slice(16);
-    let credIDLenBuf  = buffer.slice(0, 2);           buffer = buffer.slice(2);
-    let credIDLen     = credIDLenBuf.readUInt16BE(0);
-    let credID        = buffer.slice(0, credIDLen);   buffer = buffer.slice(credIDLen);
+    let rpIdHash = buffer.slice(0, 32); buffer = buffer.slice(32);
+    let flagsBuf = buffer.slice(0, 1); buffer = buffer.slice(1);
+    let flags = flagsBuf[0];
+    let counterBuf = buffer.slice(0, 4); buffer = buffer.slice(4);
+    let counter = counterBuf.readUInt32BE(0);
+    let aaguid = buffer.slice(0, 16); buffer = buffer.slice(16);
+    let credIDLenBuf = buffer.slice(0, 2); buffer = buffer.slice(2);
+    let credIDLen = credIDLenBuf.readUInt16BE(0);
+    let credID = buffer.slice(0, credIDLen); buffer = buffer.slice(credIDLen);
     let COSEPublicKey = buffer;
 
-    return {rpIdHash, flagsBuf, flags, counter, counterBuf, aaguid, credID, COSEPublicKey}
+    return { rpIdHash, flagsBuf, flags, counter, counterBuf, aaguid, credID, COSEPublicKey }
 }
+
