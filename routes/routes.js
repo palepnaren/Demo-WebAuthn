@@ -7,8 +7,9 @@ const base64ToBuffer = require('base64-arraybuffer');
 router.post('/login', (request, response) => {
     var authenticators;
 
-    keys.getServerAssertion(authenticators, request.session.id, function(res){
-        request.session.challenge = res.challenge;
+    keys.getServerAssertion(authenticators, request.session.id, request.session.challenge, function(res){
+        console.log("request.session.id inside /login: "+request.session.id);
+        // request.session.challenge = res.challenge;
         response.json({data:res,status:200});
     });
 
@@ -46,6 +47,7 @@ router.post('/getPublicKey', (request, response) => {
         pubKeyRes.type = res.data.request.type;
         pubKeyRes.credId = base64ToBuffer.encode(res.credId);
         request.session.id = pubKeyRes.credId;
+        console.log("credId inside /getPubKey: " +request.session.id);
         response.send({data:pubKeyRes,status:200});
     })
     

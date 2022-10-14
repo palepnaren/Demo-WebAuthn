@@ -33,6 +33,7 @@ export class AppComponent implements OnInit {
         let idbuff;
         if(res['data']['allowCredentials'][0]['id']){
           idbuff = this._base64ToArrayBuffer(res['data']['allowCredentials'][0]['id']);
+          console.log("idBuff inside login: "+res['data']['allowCredentials'][0]['id'])
         }
         
         let challenge = this._base64ToArrayBuffer(res['data']['challenge']);
@@ -94,6 +95,7 @@ export class AppComponent implements OnInit {
   }
 
   convertMakCredResponse(res: any) {
+    console.log("res.user.id inside converter: "+this._base64ToArrayBuffer(res.user.id));
     let response = {
       challenge: this._base64ToArrayBuffer(res.challenge),
       user: {
@@ -145,8 +147,8 @@ export class AppComponent implements OnInit {
     if (pubKeyCred) {
       if (pubKeyCred.rawId instanceof ArrayBuffer) {
 
-        _pubKeyCred.rawId = this.toBase64(pubKeyCred.rawId);
-
+        _pubKeyCred.rawId = this.toBase64(pubKeyCred.rawId).replace(/-/g, "+").replace(/_/g, "/");
+        console.log("pubKeyCred.rawId inside publicKeyCredentialToJSON: "+this.toBase64(pubKeyCred.rawId).replace(/-/g, "+").replace(/_/g, "/"));
       }
 
       if (pubKeyCred.response) {
@@ -169,7 +171,8 @@ export class AppComponent implements OnInit {
         _pubKeyCred.response.pubKey = key;
       }
       _pubKeyCred.type = pubKeyCred.type;
-      _pubKeyCred.id = pubKeyCred.id;
+      _pubKeyCred.id = pubKeyCred.id.replace(/-/g, "+").replace(/_/g, "/");
+      console.log("pubKeyCred.id inside publicKeyCredentialToJSON: "+_pubKeyCred.id.replace(/-/g, "+").replace(/_/g, "/"));
       _pubKeyCred.authenticatorAttachment = pubKeyCred.authenticatorAttachment;
       
 
