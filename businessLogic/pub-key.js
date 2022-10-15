@@ -72,7 +72,7 @@ exports.getServerAssertion = function (authenticators, id, _challenge, callback)
             type: 'public-key',
             id: id,
             // transports: ['internal', "usb", "nfc", "ble"]
-            transports : ["usb"]
+            transports : ["usb","internal"]
         }]
         res.rpId = "localhost";
         res.timeout = 300000;
@@ -94,7 +94,7 @@ exports.valiate = function (res, key, _challenge, callback) {
             id: res.rawId,
             type: "public-key",
             // transports: ["internal", "usb", "nfc", "ble"]
-            transports: ["usb"]
+            transports: ["usb","internal"]
         }],
         challenge: _challenge,
         origin: "http://localhost:3000",
