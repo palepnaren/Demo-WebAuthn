@@ -47,6 +47,7 @@ router.post('/getPublicKey', (request, response) => {
         pubKeyRes.type = res.data.request.type;
         pubKeyRes.credId = base64ToBuffer.encode(res.credId);
         request.session.id = pubKeyRes.credId;
+        console.log("rawId inside /getPubKey: " +base64ToBuffer.encode(res.data.clientData.get('rawId')));
         console.log("credId inside /getPubKey: " +request.session.id);
         response.send({data:pubKeyRes,status:200});
     })

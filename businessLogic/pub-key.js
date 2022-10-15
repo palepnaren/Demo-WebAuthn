@@ -71,7 +71,8 @@ exports.getServerAssertion = function (authenticators, id, _challenge, callback)
         res.allowCredentials = [{
             type: 'public-key',
             id: id,
-            transports: ['internal', "usb", "nfc", "ble"]
+            // transports: ['internal', "usb", "nfc", "ble"]
+            transports : ["usb"]
         }]
         res.rpId = "localhost";
         res.timeout = 300000;
@@ -92,7 +93,8 @@ exports.valiate = function (res, key, _challenge, callback) {
         allowCredentials: [{
             id: res.rawId,
             type: "public-key",
-            transports: ["internal", "usb", "nfc", "ble"]
+            // transports: ["internal", "usb", "nfc", "ble"]
+            transports: ["usb"]
         }],
         challenge: _challenge,
         origin: "http://localhost:3000",
@@ -104,6 +106,8 @@ exports.valiate = function (res, key, _challenge, callback) {
 
     fido2.assertionResult(res, assertionExpectations).then(res => {
         return callback(res);
+    }).catch(error => {
+        return callback(error);
     })
 }
 

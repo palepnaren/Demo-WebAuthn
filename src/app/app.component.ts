@@ -32,15 +32,17 @@ export class AppComponent implements OnInit {
       if(res['status'] == 200){
         let idbuff;
         if(res['data']['allowCredentials'][0]['id']){
-          idbuff = this._base64ToArrayBuffer(res['data']['allowCredentials'][0]['id']);
+          res['data']['allowCredentials'][0]['id'] = this._base64ToArrayBuffer(res['data']['allowCredentials'][0]['id']);
+          // idbuff = res['data']['allowCredentials'][0]['id'];
           console.log("idBuff inside login: "+res['data']['allowCredentials'][0]['id'])
         }
         
         let challenge = this._base64ToArrayBuffer(res['data']['challenge']);
         let publicKey = {
           challenge: challenge,
-          id: idbuff,
-          userVerification: res['data']['userVerification']
+          rpId: res['data']['rpId'],
+          userVerification: res['data']['userVerification'],
+          allowCredentials: res['data']['allowCredentials']
         }
         navigator.credentials.get({ publicKey }).then(creds => {
           let assertionRes = this.publicKeyCredentialToJSON(creds);
