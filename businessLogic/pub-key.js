@@ -44,9 +44,6 @@ exports.getPublicKey = function (res, _challenge, callback) {
 
     res.id = base64ToBuffer.decode(res.id);
     res.rawId = base64ToBuffer.decode(res.rawId);
-    console.log("res.id inside getPubKey: "+res.id);
-    console.log("res.rawId inside getPubKey: "+res.rawId);
-    console.log("authDataStructure.credID inside getPubKey: "+authDataStructure.credID);
     const attestationExpectations = {
         challenge: _challenge,
         origin: "http://localhost:3000",
